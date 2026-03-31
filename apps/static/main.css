@@ -1,0 +1,95 @@
+/* task 1 links.html*/
+.link-box {
+    display: block;
+    padding: 30px;
+    text-align: center;
+    font-size: 18px;
+    margin: 0px; 
+}
+
+#link1 { background-color: #acf3bb; color: #d04d39; }
+#link2 { background-color: #555555; color: #e2c965; }
+#link3 { background-color: #000000; color: #ffffff; }
+
+a:link {
+    opacity: 1;
+}
+
+a:visited {
+    opacity: 0.8;
+}
+
+a:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+a:active {
+    opacity: 0.6;
+}
+
+/* task 2 formatting.html*/
+h1 {
+    text-align: left;
+    color: #008000;
+    font-size: 35px;
+    background-color: #f5f5dc;
+    padding: 20px;
+}
+p {
+    text-align: left;
+    color: #000000;
+    font-size: 20px;
+}
+
+/* task 3 listing.html*/
+
+.listing-title {
+    background-color: #5f9ea0; 
+    color: white;
+    padding: 10px;
+    text-align: left;
+    font-size: 35px;
+}
+
+/* task 4 tables.html*/
+
+
+.table1-title {
+    font-size: 20px;
+    width: 8%;         
+    line-height: 1;
+    margin: 0 auto;      
+    text-align: center;   
+    font-weight: bold;
+}
+.table1 {
+    border: 1px solid black;
+    margin: 0 auto;
+}
+.table1 th, .table1 td {
+    border: 1px solid black;
+    text-align: center;
+}
+.table2-title {
+    padding-top: 15px;
+    font-size: 18px;
+    margin: 0 auto;      
+    text-align: center;  
+    font-weight: lighter;
+}
+.img-cell{
+    padding: 6px;
+}
+.desert-img{
+    width: 200px;
+}
+.table2 {
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+.table2 th, .table2 td {
+    border: 1px solid black;
+    text-align: center;
+}
