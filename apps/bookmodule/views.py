@@ -93,3 +93,48 @@ def __getBooksList():
     book3 = {'id':43211234, 'title':'The Hundred-Page Machine Learning Book', 'author':'Andriy Burkov'}
     return [book1, book2, book3]
 
+
+from django.db.models import Q
+
+def task1(request):
+    books = Book.objects.filter(Q(price__lte=80))
+    return render(request, 'bookmodule/task1.html', {'books': books})
+
+
+def task2(request):
+    books = Book.objects.filter(
+        Q(edition__gt=3) &
+        (Q(title__contains='qu') | Q(author__contains='qu'))
+    )
+    return render(request, 'bookmodule/task2.html', {'books': books})
+
+
+def task3(request):
+    books = Book.objects.filter(
+        Q(edition__lte=3) &
+        ~(Q(title__contains='qu') | Q(author__contains='qu'))
+    )
+    return render(request, 'bookmodule/task3.html', {'books': books})
+
+def task4(request):
+    books = Book.objects.all().order_by('title')
+    return render(request, 'bookmodule/task4.html', {'books': books})
+
+
+from django.db.models import Count, Sum, Avg, Max, Min
+
+def task5(request):
+    stats = Book.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price'),
+        avg_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price')
+    )
+    return render(request, 'bookmodule/task5.html', {'stats': stats})
+
+from .models import Address
+def task7(request):
+    data = Address.objects.annotate(count=Count('student'))
+    return render(request, 'bookmodule/task7.html', {'data': data})
+
