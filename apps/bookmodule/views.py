@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Book
+from .models import Book, Booklab9, Publisher
 
 def simple_query(request):
     mybooks=Book.objects.filter(title__icontains='and') # <- multiple objects
@@ -98,7 +98,7 @@ from django.db.models import Q
 
 def task1(request):
     books = Book.objects.filter(Q(price__lte=80))
-    return render(request, 'bookmodule/task1.html', {'books': books})
+    return render(request, 'bookmodule/lab8/task1.html', {'books': books})
 
 
 def task2(request):
@@ -106,7 +106,7 @@ def task2(request):
         Q(edition__gt=3) &
         (Q(title__contains='qu') | Q(author__contains='qu'))
     )
-    return render(request, 'bookmodule/task2.html', {'books': books})
+    return render(request, 'bookmodule/lab8/task2.html', {'books': books})
 
 
 def task3(request):
@@ -114,11 +114,11 @@ def task3(request):
         Q(edition__lte=3) &
         ~(Q(title__contains='qu') | Q(author__contains='qu'))
     )
-    return render(request, 'bookmodule/task3.html', {'books': books})
+    return render(request, 'bookmodule/lab8/task3.html', {'books': books})
 
 def task4(request):
     books = Book.objects.all().order_by('title')
-    return render(request, 'bookmodule/task4.html', {'books': books})
+    return render(request, 'bookmodule/lab8/task4.html', {'books': books})
 
 
 from django.db.models import Count, Sum, Avg, Max, Min
@@ -131,10 +131,63 @@ def task5(request):
         max_price=Max('price'),
         min_price=Min('price')
     )
-    return render(request, 'bookmodule/task5.html', {'stats': stats})
+    return render(request, 'bookmodule/lab8/task5.html', {'stats': stats})
 
 from .models import Address
 def task7(request):
     data = Address.objects.annotate(count=Count('student'))
-    return render(request, 'bookmodule/task7.html', {'data': data})
+    return render(request, 'bookmodule/lab8/task7.html', {'data': data})
 
+
+
+def lab9task1(request):
+    books = Booklab9.objects.all()
+    total_quantity = sum(book.quantity for book in books) or 1
+
+    for book in books:
+        book.percentage = round((book.quantity / total_quantity) * 100, 2)
+    return render(request, 'bookmodule/lab9/task1.html', {'books': books})
+
+
+def lab9task2(request):
+    publishers = Publisher.objects.annotate(
+        total_stock=Sum('booklab9__quantity')
+    )
+    return render(request, 'bookmodule/lab9/task2.html', {'publishers': publishers})
+
+
+def lab9task3(request):
+    publishers = Publisher.objects.annotate(
+        oldest_date=Min('booklab9__pubdate')
+    )
+    return render(request, 'bookmodule/lab9/task3.html', {'publishers': publishers})
+
+
+def lab9task4(request):
+    publishers = Publisher.objects.annotate(
+        avg_price=Avg('booklab9__price'),
+        min_price=Min('booklab9__price'),
+        max_price=Max('booklab9__price')
+    )
+    return render(request, 'bookmodule/lab9/task4.html', {'publishers': publishers})
+
+
+def lab9task5(request):
+    publishers = Publisher.objects.annotate(
+        high_rated=Count('booklab9', filter=Q(booklab9__rating__gte=4)
+    ),
+        quantity = Sum('booklab9__quantity', filter=Q(booklab9__rating__gte=4))
+    )
+    return render(request, 'bookmodule/lab9/task5.html', {'publishers': publishers})
+
+
+def lab9task6(request):
+    publishers = Publisher.objects.annotate(
+        filtered_books=Count(
+            'booklab9',
+            filter=Q(
+                booklab9__price__gt=50,
+                booklab9__quantity__lt=5,
+                booklab9__quantity__gte=1
+            ) ) )
+    return render(request, 'bookmodule/lab9/task6.html', {'publishers': publishers})
