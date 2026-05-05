@@ -40,12 +40,18 @@ def viewbook(request, bookId):
     if book2['id'] == bookId: targetBook = book2
     context = {'book':targetBook} 
     return render(request, 'bookmodule/show.html', context)
+
+
+from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, "bookmodule/index.html")
+@login_required(login_url='login')
 def list_books(request):
     return render(request, 'bookmodule/list_books.html')
+@login_required(login_url='login')
 def viewbook(request, bookId):
     return render(request, 'bookmodule/one_book.html')
+@login_required(login_url='login')
 def aboutus(request):
     return render(request, 'bookmodule/aboutus.html')
 
@@ -292,3 +298,8 @@ def add_book_image(request):
         form = BookImageForm()
 
     return render(request, 'bookmodule/lab11/add_book_image.html', {'form': form})
+
+
+
+def lab13(request):
+    return render(request, 'bookmodule/lab13.html')

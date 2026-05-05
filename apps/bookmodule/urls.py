@@ -52,7 +52,6 @@ urlpatterns = [
 
 
 
-
-
+     path('lab13/', views.lab13),
 
 ]

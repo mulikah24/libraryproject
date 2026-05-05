@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 13</title>
+</head>
+<body>
+
+<div id="myDiv">Hello</div>
+<button onclick="changeColor()">Change Color</button>
+<button onclick="changeText()">Change Text</button>
+
+<ul id="myList">
+    <li>Item 1</li>
+</ul>
+<button onclick="addItem()">Add Item</button>
+
+<div id="toggleDiv">Toggle Me</div>
+<button onclick="toggleDiv()">Show/Hide</button>
+
+<div id="hoverDiv">Hover me</div>
+
+<script>
+
+// Task 1
+function changeColor() {
+    document.getElementById("myDiv").style.backgroundColor = "lightblue";
+}
+
+// Task 2
+function changeText() {
+    document.getElementById("myDiv").innerHTML = "Text changed!";
+}
+
+// Task 3
+var count = 2;
+function addItem() {
+    var li = document.createElement("li");
+    li.innerHTML = "New Item " + count;
+    document.getElementById("myList").appendChild(li);
+    count++;
+}
+
+// Task 4
+function toggleDiv() {
+    var div = document.getElementById("toggleDiv");
+    div.style.display = (div.style.display === "none") ? "block" : "none";
+}
+
+// Task 5
+var hoverDiv = document.getElementById("hoverDiv");
+hoverDiv.style.backgroundColor = "lightgray";
+
+hoverDiv.onmouseover = function() {
+    hoverDiv.style.backgroundColor = "lightcoral";
+    hoverDiv.style.fontSize = "20px";
+}
+
+hoverDiv.onmouseout = function() {
+    hoverDiv.style.backgroundColor = "lightgray";
+    hoverDiv.style.fontSize = "16px";
+}
+</script>
+
+</body>
+</html>
